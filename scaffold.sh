@@ -38,3 +38,8 @@ for file in $(find template/ -type f -printf '%f\n'); do
 done
 
 echo "Esercizio creato in $full_path"
+
+if [ "$TERM_PROGRAM" == "vscode" ]; then
+  code "$full_path/$name.c"
+  echo "Apertura in vscode..."
+fi
