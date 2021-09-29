@@ -1,7 +1,6 @@
 SRC = $(wildcard *.c)
 BUILD_DIR = $(abspath ./build/)
-EXERCISE_NAME = $(notdir $(CURDIR))
-EXECUTABLE = $(BUILD_DIR)/$(EXERCISE_NAME)
+EXECUTABLE = $(BUILD_DIR)/out
 
 CFLAGS += -Wall
 
@@ -17,5 +16,5 @@ $(EXECUTABLE): $(SRC)
 	$(CC) $(SRC) -o $(EXECUTABLE) $(CFLAGS)
 
 clean:
-	rm -r $(BUILD_DIR)
+	rm -r $(BUILD_DIR) || true
 .PHONY: clean
