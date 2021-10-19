@@ -28,6 +28,10 @@ int main() {
     if (c >= 'a' && c <= 'z') {
       int nLettera = c - 'a';
       nLettera = (nLettera + k) % 26;
+      if (nLettera < 0) {
+        nLettera += 26;
+      }
+
       c = nLettera + 'a';
     }
 
