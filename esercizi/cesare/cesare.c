@@ -17,19 +17,19 @@ int main() {
   // consuma il \n lasciato dalla precedente scanf
   scanf("\n");
 
-  // riporta k nel range 0-26
-  k = k % 26;
-
   do {
     scanf("%c", &c);
 
-    // rendi tutte le lettere minusco
+    // rendi tutte le lettere minuscole
     if (c >= 'A' && c <= 'Z')
       c += 'a' - 'A';
 
     // applica offset solo alle lettere dell'alfabeto
-    if (c >= 'a' && c <= 'z')
-      c += k;
+    if (c >= 'a' && c <= 'z') {
+      int nLettera = c - 'a';
+      nLettera = (nLettera + k) % 26;
+      c = nLettera + 'a';
+    }
 
     printf("%c", c);
   } while (c != '\n');
