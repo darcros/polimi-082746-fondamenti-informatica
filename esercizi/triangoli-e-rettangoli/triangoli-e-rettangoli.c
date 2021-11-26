@@ -42,15 +42,14 @@ typedef struct {
   È più veloce che fare la radice quadrata e per comparare i lati va bene lo
   stesso.
 */
-float distSquared(const point* a, const point* b) {
-  return ((*a).x - (*b).x) * ((*a).x - (*b).x) +
-         ((*a).y - (*b).y) * ((*a).y - (*b).y);
+float distSquared(point a, point b) {
+  return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
 /*
   Dato un triangolo calcola la relazione tra i suoi lati.
 */
-triangleType getTriangleType(const triangle* t) {
+triangleType getTriangleType(triangle t) {
   float ab = distSquared(t[0], t[1]);
   float bc = distSquared(t[1], t[2]);
   float ca = distSquared(t[2], t[0]);
@@ -67,9 +66,9 @@ triangleType getTriangleType(const triangle* t) {
   return scalene;
 }
 
-void printTriangle(const triangle* t) {
-  printf("Triangolo: A(%f, %f) B(%f, %f) C(%f, %f)\n", (*t[0]).x, (*t[0]).y,
-         (*t[1]).x, (*t[1]).y, (*t[2]).x, (*t[2]).y);
+void printTriangle(triangle t) {
+  printf("Triangolo: A(%f, %f) B(%f, %f) C(%f, %f)\n", t[0].x, t[0].y, t[1].x,
+         t[1].y, t[2].x, t[2].y);
 }
 
 /*
@@ -77,11 +76,8 @@ void printTriangle(const triangle* t) {
   nord-ovest è situato veramente più in alto a sinistra del punto sud-est),
   altrimenti restituisce false.
 */
-bool isValid(const rectangle* r) {
-  point nw = (*r).nw;
-  point se = (*r).se;
-
-  return (nw.x < se.x) && (nw.y > se.y);
+bool isValid(rectangle r) {
+  return (r.nw.x < r.se.x) && (r.nw.y > r.se.y);
 }
 
 /*
@@ -89,20 +85,19 @@ bool isValid(const rectangle* r) {
   Questa funzione presume che i due rettangoli siano validi come specificato da
   `bool isValid(const rectangle* r)`.
 */
-rectangle getBoudingBox(const rectangle* a, const rectangle* b) {
+rectangle getBoudingBox(rectangle a, rectangle b) {
   rectangle r;
 
-  r.nw.x = (*a).nw.x > (*b).nw.x ? (*a).nw.x : (*b).nw.x;
-  r.nw.y = (*a).nw.y > (*b).nw.y ? (*a).nw.y : (*b).nw.y;
-  r.se.x = (*a).se.x < (*b).se.x ? (*a).se.x : (*b).se.x;
-  r.se.x = (*a).se.x < (*b).se.x ? (*a).se.x : (*b).se.x;
+  r.nw.x = a.nw.x > b.nw.x ? a.nw.x : b.nw.x;
+  r.nw.y = a.nw.y > b.nw.y ? a.nw.y : b.nw.y;
+  r.se.x = a.se.x < b.se.x ? a.se.x : b.se.x;
+  r.se.x = a.se.x < b.se.x ? a.se.x : b.se.x;
 
   return r;
 }
 
-void printRectangle(const rectangle* r) {
-  printf("Rettangolo: NW(%f, %f) SE(%f, %f)\n", (*r).nw.x, (*r).nw.y, (*r).se.x,
-         (*r).se.y);
+void printRectangle(rectangle r) {
+  printf("Rettangolo: NW(%f, %f) SE(%f, %f)\n", r.nw.x, r.nw.y, r.se.x, r.se.y);
 }
 
 int main() {
@@ -114,9 +109,9 @@ int main() {
   };
 
   printf("t: ");
-  printTriangle(&t);
+  printTriangle(t);
 
-  switch (getTriangleType(&t)) {
+  switch (getTriangleType(t)) {
     case equilateral:
       printf("Il triangolo è equilatero\n");
       break;
@@ -142,16 +137,16 @@ int main() {
   };
 
   printf("r1: ");
-  printRectangle(&r1);
+  printRectangle(r1);
   printf("r2: ");
-  printRectangle(&r2);
+  printRectangle(r2);
 
-  printf("r1 %s valido\n", isValid(&r1) ? "è" : "non è");
-  printf("r2 %s valido\n", isValid(&r2) ? "è" : "non è");
+  printf("r1 %s valido\n", isValid(r1) ? "è" : "non è");
+  printf("r2 %s valido\n", isValid(r2) ? "è" : "non è");
 
-  rectangle bb = getBoudingBox(&r1, &r2);
+  rectangle bb = getBoudingBox(r1, r2);
   printf("bb: ");
-  printRectangle(&bb);
+  printRectangle(bb);
 
   // TODO: trovare l'intersezione tra i due rettangoli
 
