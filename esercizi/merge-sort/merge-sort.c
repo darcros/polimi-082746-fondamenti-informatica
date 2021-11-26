@@ -65,7 +65,7 @@ void merge(int* arr, int start, int middle, int end) {
     if (arr[i] > arr[middle + 1])
       swap(&arr[i], &arr[middle + 1]);
 
-    // rirdino solo l'array di destra, quello di destra è garantito che sia
+    // rirdino solo l'array di destra, quello di sinistra è garantito che sia
     // ordinato
     sort(arr, middle + 1, end);
   }
