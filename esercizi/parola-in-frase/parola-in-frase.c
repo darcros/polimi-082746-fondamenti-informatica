@@ -1,62 +1,52 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #define NF 200
 #define NP 30
 
-/*
-  Sformatino di castagne e pistacchi
-*/
+int startsWith(char* s1, char* s2) {
+  int i = 0;
+  while (s2[i] != '\0') {
+    // Se la prima stringa è più corta della seconda
+    if (s1[i] == '\0')
+      return 0;
 
-char toLowerCase(char c) {
-  if (c >= 'A' && c <= 'Z')
-    return c + ('a' - 'A');
+    if (tolower(s1[i]) != tolower(s2[i]))
+      return 0;
 
-  return c;
-}
+    i++;
+  }
 
-int isWordChar(char c) {
-  return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+  return 1;
 }
 
 int pif(char* frase, char* parola) {
   int len = strlen(parola);
   int i = 0;
-  int j = 0;
 
-  // scorro tutta la frase
+  // Scorro tutta la frase
   while (frase[i] != '\0') {
-    char prev = i == 0 ? '\0' : toLowerCase(frase[i - 1]);
-    char next = toLowerCase(frase[i + 1]);
-    char cf = toLowerCase(frase[i]);
-    char cp = toLowerCase(parola[j]);
+    // Se siamo all'inizio di una parola
+    if (isalpha(frase[i]) && (i == 0 || !isalpha(frase[i - 1]))) {
+      // Se la parola che abbiamo trovato inizia con la parola che cerchiamo
+      if (startsWith(&frase[i], parola)) {
+        i += len;  // considero "consumata" la parte di frase che è stata
+                   // matchata dal startsWith()
 
-    // Per poter incrementare il contatore dei caratteri che combaciano:
-    // 1. il carattere della frase e della parola devono combaciare
-    // 2. dobbiamo essere
-    //   - o dentro a una parola
-    //   - o all'inizoi di una parola
-    if (cf == cp && (j > 0 || (isWordChar(cf) && !isWordChar(prev)))) {
-      j++;
-    } else {
-      // se i caratteri non cambaciano, resetto il contatore dei match
-      j = 0;
-    }
-
-    // l'intera parola combacia
-    if (j == len) {
-      // se questa è la fine della parola: parola trovata per intero e da sola, FINE
-      if (isWordChar(cf) && !isWordChar(next)) {
-        return 1;
+        // Se la parola che abbiamo trovato finisce subito dopo il match della
+        // parola che cerchiamo, allora la parola che abbbiamo trovato è uguale
+        // alla parola che cerchiamo
+        if (isalpha(frase[i - 1]) && !isalpha(frase[i])) {
+          return 1;
+        }
       }
-
-      // ... altrimenti resetto il contatore dei match
-      j = 0;
     }
 
     i++;
   }
 
+  // sono arrivato alla fine della frase e non ho trovato nulla
   return 0;
 }
 
