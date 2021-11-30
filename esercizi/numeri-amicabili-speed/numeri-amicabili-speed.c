@@ -6,26 +6,43 @@
 ESE: Trovare tutti i numeri amicabili minori di MAX nel minor tempo possibile.
 */
 
-#define MAX 10000000
+#define MAX_DEFAULT 10000000
 
-int main() {
+int main(int argc, char* argv[]) {
+  int max;
+
+  if (argc == 2) {
+    max = atoi(argv[1]);
+
+    // se la conversione non avviene con successo atoi() restituisce 0
+    if (max != 0) {
+      printf("utilizzo max=%d\n", max);
+    } else {
+      max = MAX_DEFAULT;
+      printf(
+          "numero non valido passato come primo argomento, uso max=%d "
+          "(default)\n",
+          MAX_DEFAULT);
+    }
+  } else {
+    printf("Nessun numero passato come argomento, uso max=%d (DEFAULT)\n",
+           MAX_DEFAULT);
+    max = MAX_DEFAULT;
+  }
+
   clock_t inizio = clock();
 
   // Utilizzo un'array di interi dove a ogni indice corrisponde la somma dei
   // divisori di quel numero.
   //
-  // NOTA 1: Qui *potrei* usare un array statico di dimensione MAX però a quanto
-  // pare c'è un limite alla dimensione allocabile sullo stack, nel mio caso con
-  // gcc (Ubuntu 10.3.0-1ubuntu1) 10.3.0 con un valore MAX 10000000 si ottiene
-  // un segfault.
   // NOTA 2: È importante usare calloc perchè il ciclo for sottostante si
   // aspetta che tutti i valori dell'array siano inizializati a 0.
-  unsigned int* sommeDivisori = calloc(MAX, sizeof(unsigned int));
+  unsigned int* sommeDivisori = calloc(max, sizeof(unsigned int));
 
   clock_t allocazione = clock();
 
-  for (int n = 1; n < MAX; n++) {
-    for (int i = n + n; i < MAX; i += n) {
+  for (int n = 1; n < max; n++) {
+    for (int i = n + n; i < max; i += n) {
       sommeDivisori[i] += n;
     }
   }
@@ -33,7 +50,7 @@ int main() {
   clock_t tabellaCalcolata = clock();
 
   int tot = 0;
-  for (unsigned int n = 1; n < MAX; n++) {
+  for (unsigned int n = 1; n < max; n++) {
     int possibileAmico = sommeDivisori[n];
 
     int amicabili =
@@ -42,7 +59,7 @@ int main() {
         // evitiamo di fare accessi out-of-bounds su sommeDivisori (non serve
         // controllare possibileAmico<0 perchè la somma di divisori positivi
         // non è mai <0)
-        && possibileAmico < MAX
+        && possibileAmico < max
         // controlla che i numeri siano amicabili
         && sommeDivisori[possibileAmico] == n;
 
