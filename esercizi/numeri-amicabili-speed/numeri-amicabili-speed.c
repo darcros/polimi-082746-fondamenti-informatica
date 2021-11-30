@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
   // divisori di quel numero.
   //
   // NOTA 2: È importante usare calloc perchè il ciclo for sottostante si
-  // aspetta che tutti i valori dell'array siano inizializati a 0.
+  // aspetta che tutti i valori dell'array siano inizializzati a 0.
   unsigned int* sommeDivisori = calloc(max, sizeof(unsigned int));
 
   clock_t allocazione = clock();
