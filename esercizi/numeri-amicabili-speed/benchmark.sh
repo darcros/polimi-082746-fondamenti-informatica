@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 
 # cancella il vecchio eseguibile
 make clean
-# compila il programma con le ottimizzazioni attivate, che alla fine fanno poco differenza
+# compila il programma con le ottimizzazioni attivate, che alla fine fanno poca differenza
 make CLFLAGS=-O3 build
 
 # array dei numeri da provare per misurare il tempo
@@ -44,7 +44,7 @@ done
 
 # CPU:      Intel Core i3-3240T @ 2.90GHz
 # compiler: gcc (Ubuntu 10.3.0-1ubuntu1) 10.3.0
-# con ottimizzazioni attivate (flat -O3)
+# con ottimizzazioni attivate (flag -O3)
 #
 #    100000:    13 coppie trovate     0.006880 secondi
 #   1000000:    40 coppie trovate     0.141177 secondi
