@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 
   int tot = 0;
   for (unsigned int n = 1; n < max; n++) {
-    int possibileAmico = sommeDivisori[n];
+    unsigned int possibileAmico = sommeDivisori[n];
 
     int amicabili =
         // evitiamo di mostrare coppie duplicate
