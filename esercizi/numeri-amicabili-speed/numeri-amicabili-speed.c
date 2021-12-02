@@ -69,6 +69,8 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  free(sommeDivisori);
+
   clock_t fine = clock();
 
   printf("\n=== RIASSUNTO ===\n");
