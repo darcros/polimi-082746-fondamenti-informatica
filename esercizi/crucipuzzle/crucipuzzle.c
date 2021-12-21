@@ -42,10 +42,6 @@ int controllaCellaDirezione(char** tabella,
   int x = cellX;
   int y = cellY;
 
-  if (strcmp(parola, "ARMADIO") == 0 && dy == 1) {
-    printf("a");
-  }
-
   while (parola[i] != 0) {
     if (x < 0 || x >= cols || y < 0 || y >= rows) {
       return 0;
@@ -93,8 +89,10 @@ int cercaParola(char** tabella, char* parola, int** maschera) {
       // controlla ogni direzione
       for (int dx = -1; dx <= 1; dx++) {
         for (int dy = -1; dy <= 1; dy++) {
-          if (dx == 0 && dy == 0)  // non avrebbe senso controllare qusta
+          // non avrebbe senso controllare questa direzione, quindi la skippo
+          if (dx == 0 && dy == 0) {
             continue;
+          }
 
           int trovata = controllaCellaDirezione(tabella, parola, x, y, dx, dy);
           if (trovata) {
